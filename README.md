@@ -2,7 +2,8 @@
 This repository just contains a bunch of PDFs of relevant papers for B cell population models
 
 **Contains**:
-* Smith 1999 from PNAS
+* Smith 1999
+  - from PNAS
 * Skowronski and Smith 2017
   - from J. Infectious Diseases
 * Zarnitsyna and Antia 2015
