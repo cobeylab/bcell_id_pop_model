@@ -10,7 +10,7 @@ Hf <- rep(0, NUMSTEPS) #free antigen
 Hb <- rep(0, NUMSTEPS) #bound antigen
 B <- rep(0, NUMSTEPS) #B cells
 A <- rep(0, NUMSTEPS) #Antibodies
-t <- seq(0,NUMDAYS,dt) #time vector
+t <- seq(0, NUMDAYS, dt) #time vector
 
 k <- 0.01 #1/AU*day
 dH <- 0.5 #1/day
@@ -35,8 +35,24 @@ BFUNC <- function(s,phi,B,Hf,t) { #B cell ODE
   return((s*B[t]*Hf[t])/(phi + Hf[t]))
 }
 
+BFUNCMask <- function(s,phi,B,Hf,Hb,t) { #B cell ODE
+  return((s*B[t]*(Hf[t]+Hb[t]))/(phi + (Hf[t]+Hb[t])))
+}
+
 AFUNC <- function(k,dA,a,B,Hf,A,t) { #Ab ODE
   return(a*B[t] - k*A[t]*Hf[t] - dA*A[t])
+}
+
+zero_floor <- function(value) {
+  if (is.na(value >= 0)) {
+    print('eval to NA')
+    print(value)
+    return(0)
+  } else if (value >= 0) {
+    return(value)
+  } else {
+    return(0)
+  }
 }
 
 #Forward Euler first because I want to make sure I'm
@@ -46,14 +62,12 @@ for (i in 1:NUMSTEPS) {
   if (t[i] == 30) {
     Hf[i+1] = Hf[i] + 1000
   } else {
-    Hf[i+1] <- Hf[i] + dt*HfFUNC(k,dH,A,Hf,i)
+    Hf[i+1] <- zero_floor(Hf[i] + dt*HfFUNC(k,dH,A,Hf,i))
   }
-  Hb[i+1] <- Hb[i] + dt*HbFUNC(k,dH,A,Hf,Hb,i)
-  B[i+1] <- B[i] + dt*BFUNC(s,phi,B,Hf,i)
-  A[i+1] <- A[i] + dt*AFUNC(k,dA,a,B,Hf,A,i)
-  if (Hf[i+1] < 0.0001) {
-    Hf[i+1] <- 0
-  }
+  Hb[i+1] <- zero_floor(Hb[i] + dt*HbFUNC(k,dH,A,Hf,Hb,i))
+  B[i+1] <- zero_floor(B[i] + dt*BFUNC(s,phi,B,Hf,i))
+  A[i+1] <- zero_floor(A[i] + dt*AFUNC(k,dA,a,B,Hf,A,i))
+
 }
 
 plot(t ,Hf,type='l',col='red',log = 'y', xlim=c(0,60),ylim=c(1,10000),xlab='Days',ylab='Count')
