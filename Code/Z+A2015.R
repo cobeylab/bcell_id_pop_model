@@ -4,7 +4,7 @@
 #Graham Northrup June 30
 
 NUMDAYS <- 60
-dt <- 0.01
+dt <- 0.05
 NUMSTEPS <- NUMDAYS/dt
 Hf <- rep(0, NUMSTEPS) #free antigen
 Hb <- rep(0, NUMSTEPS) #bound antigen
@@ -14,11 +14,12 @@ t <- seq(0, NUMDAYS, dt) #time vector
 
 k <- 0.01 #1/AU*day
 dH <- 0.5 #1/day
-dB <- 3 #1/day
+dB <- 3 #1/day USE FOR ACM 
 s <- 1 #1/day
 phi <- #AU
 a <- 0.1 #1/day
 dA <- 0.1 #1/dat
+alpha <- 0.01 #USE FOR FIM
 
 Hf[1] <- 1000
 B[1] <- 1
@@ -32,7 +33,7 @@ HbFUNC <- function(k,dH,A,Hf,Hb,t) { #evals Hb ODE
   return(k*A[t]*Hf[t] - dH*Hb[t])
 }
 
-BFUNCMask <- function(s,phi,B,Hf,t) { #B cell ODE
+BFUNCMask <- function(s,phi,B,Hf,Hb,t) { #B cell ODE
   return((s*B[t]*Hf[t])/(phi + Hf[t]))
 }
 
@@ -55,8 +56,8 @@ for (i in 1:NUMSTEPS) {
   } else {
     Hf[i+1] <- Hf[i] + dt*HfFUNC(k,dH,A,Hf,i)
   }
-  Hb[i+1] <- Hb[i] + dt*HbFUNC(k,dH,A,Hf,Hb,i)
-  B[i+1] <- B[i] + dt*BFUNCMask(s,phi,B,Hf,i)
+  Hb[i+1] <- Hb[i] + dt*HbFUNC(k,dB,A,Hf,Hb,i)
+  B[i+1] <- B[i] + dt*BFUNCNonMask(s,phi,B,Hf,Hb,i)
   A[i+1] <- A[i] + dt*AFUNC(k,dA,a,B,Hf,A,i)
   if (Hf[i+1] < 0.0001) {
     Hf[i+1] <- 0
