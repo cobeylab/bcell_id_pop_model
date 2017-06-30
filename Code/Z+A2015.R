@@ -14,6 +14,7 @@ t <- seq(0, NUMDAYS, dt) #time vector
 
 k <- 0.01 #1/AU*day
 dH <- 0.5 #1/day
+dB <- 3 #1/day
 s <- 1 #1/day
 phi <- #AU
 a <- 0.1 #1/day
@@ -35,7 +36,7 @@ BFUNCMask <- function(s,phi,B,Hf,t) { #B cell ODE
   return((s*B[t]*Hf[t])/(phi + Hf[t]))
 }
 
-BFUNCNonMask <- function(s,phi,B,Hf,Hb,t) { #B cell ODE
+BFUNCNonMask <- function(s,phi,B,Hf,Hb,t) { #B cell ODE. Also causes weird dynamics
   H <- Hf[t] + Hb[t]
   return((s*B[t]*H)/(phi + H))
 }
@@ -71,8 +72,8 @@ for (i in 1:NUMSTEPS) {
 plot(t ,Hf,type='l',col='red',log = 'y', xlim=c(0,60),ylim=c(1,100000000),xlab='Days',ylab='Count')
 lines(t,B,type='l',col='blue')
 lines(t,A,type='l',col='dark green')
-#lines(t,Hb,type='l', col='orange')
+lines(t,Hb,type='l', col='orange')
 
-#lines(t,Hf+Hb,type='l', col='purple')
+lines(t,Hf+Hb,type='l', col='purple')
 
 

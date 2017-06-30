@@ -1,4 +1,4 @@
-# IDLitReview
+# Modeling B Cell Immunodominance and Population Dynamics
 This repository just contains a bunch of PDFs of relevant papers for B cell population models
 
 **Contains**:
