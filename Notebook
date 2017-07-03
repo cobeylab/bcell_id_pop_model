@@ -1,0 +1,12 @@
+Monday July 3,
+  - Drilled down on the data presented in Angeletti
+    - I plan on doing this daily until it sticks
+  - Ran down the examples of B cell competition in lit review
+    - Actually not that much, a lot of homogenous B cell population models
+    - More Ab-B cell competition to be honest
+  - Implementing Logistic Growth in R
+    - Found ODE solver that works well
+    - Implemented 1 var
+    - Implemented 2 var
+    * get ggplot2 and make it work
+    * try and abstract the code to N competing populations?
