@@ -69,12 +69,19 @@ if (MULTI_VAR == TRUE) {
   NUM_VAR = 4
   rs <- c(.1,.2,.1,.2)
   ks <- c(100,100,150,200)
-  as <- c(0.1,0.2,0.1,0.05)
+  as <- matrix(c(1,0.1,0.1,0.1,0.1,1,0.2,0.1,0.1,0.2,1,0.3,0.1,0.1,0.3,1),nrow=NUM_VAR, ncol=NUM_VAR)
   Ns <- c(1,1,1,1)
   time <- seq(0,100,0.01)
   
-  params <- matrix(c(rs,ks,as), nrow=NUM_VAR, ncol=3)
+  params <- data.frame(rs,ks,as) #each row contains set of params for ODE
   states <- Ns
+  
+  multivar_log_comp <- function(time,state,params) {
+    
+    for (i in 1:NUM_VAR) {
+      
+    }
+  }
   
 }
 
