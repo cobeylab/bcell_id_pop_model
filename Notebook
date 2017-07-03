@@ -1,12 +1,13 @@
 Monday July 3,
   X Drill down on the data presented in Angeletti
-    - I plan on doing this daily until it sticks
+    * I plan on doing this daily until it sticks
   X Ran down the examples of B cell competition in lit review
-    - Actually not that much, a lot of homogenous B cell population models
-    - More Ab-B cell competition to be honest
+    * Actually not that much, a lot of homogenous B cell population models
+    * More Ab-B cell competition to be honest
   X Implement Logistic Growth in R
     X Find ODE solver that works well
     X Implement 1 var
     X Implement 2 var
     X get ggplot2 and make it work
-    * try and abstract the code to N competing populations?
+    - try and abstract the code to N competing populations?
+      * This ended up being really hard, I'm going to work on it tomorrow

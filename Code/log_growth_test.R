@@ -2,11 +2,16 @@
 #as well as get a real ODE solver up and running (deSolve)
 
 #install.packages("deSolve")
+#install.packages("ggplot2")
+#install.packages("reshape2")
 
 library("deSolve")
+library("ggplot2")
+library("reshape2")
 
 ONE_VAR <- FALSE
-TWO_VAR <- TRUE
+TWO_VAR <- FALSE
+MULTI_VAR <- TRUE
 
 if (ONE_VAR == TRUE) {
   r <- 0.1
@@ -27,13 +32,16 @@ if (ONE_VAR == TRUE) {
   out <- ode(y = simple_state_val, times = time, func = simple_log_growth, parms = simple_model_params)
   
   header <- sprintf("One variable logisitc growth where r=%f & k=%f",r,k)
-  plot(out, xlab='time',ylab='number of things',main = header,cex.main=0.7)
+  plot <- qplot(out[,'time'],out[,'N'], xlab='time',ylab='number of things', geom='line',
+        main = header)
+  plot <- plot + theme(plot.title = element_text(size=8))
+  print(plot)
 }
 
 if (TWO_VAR == TRUE) {
   rs <- c(.1,.2)
   ks <- c(100,100)
-  as <- c(0.01,0.01)
+  as <- c(0.1,0.2)
   Ns <- c(1,1)
   time <- seq(0,100,0.01)
   
@@ -42,16 +50,32 @@ if (TWO_VAR == TRUE) {
   
   tv_log_compete <- function(time,state,params) {
     with(as.list(c(state, params)),{
-      dN1 <- r1*N1*(1-((N1-a12*N2)/k1))
-      dN2 <- r2*N2*(1-((N2-a21*N1)/k2))
+      dN1 <- r1*N1*(1-((N1+a12*N2)/k1))
+      dN2 <- r2*N2*(1-((N2+a21*N1)/k2))
       list(c(dN1,dN2))
     })
   }
-  
   out <- ode(y=tv_state, times=time, func=tv_log_compete, parms=tv_params)
-  plot(out[, "time"], out[,"N1"],type='l', col='red',xlab='time',ylab='number',
-       main = 'Two Pop. Logisitc Growth w/ Competition', cex.main=0.7)
-  lines(out[, "time"], out[,"N2"], col='blue')
+  
+  df <- as.data.frame(out)
+  m_df <- melt(df, id=c('time'))
+  
+  p <- ggplot(m_df, aes(x = time, y = value, color = variable))
+  plot <- p + geom_line() + ylab("y") + ggtitle('Two Var. Growth w/ Comp.')
+  print(plot)
+}
+
+if (MULTI_VAR == TRUE) {
+  NUM_VAR = 4
+  rs <- c(.1,.2,.1,.2)
+  ks <- c(100,100,150,200)
+  as <- c(0.1,0.2,0.1,0.05)
+  Ns <- c(1,1,1,1)
+  time <- seq(0,100,0.01)
+  
+  params <- matrix(c(rs,ks,as), nrow=NUM_VAR, ncol=3)
+  states <- Ns
+  
 }
 
 
