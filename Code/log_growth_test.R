@@ -67,9 +67,10 @@ if (TWO_VAR == TRUE) {
 
 if (MULTI_VAR == TRUE) {
   NUM_VAR = 4
-  rs <- c(.1,.2,.1,.2)
-  ks <- c(100,100,150,200)
-  as <- matrix(c(1,0.1,0.1,0.1,0.1,1,0.2,0.1,0.1,0.2,1,0.3,0.1,0.1,0.3,1),nrow=NUM_VAR, ncol=NUM_VAR)
+  rs <- c(.1,.2,.3,.4)
+  ks <- c(300,250,200,150)
+  #as <- matrix(c(1,0.1,0.1,0.1,0.1,1,0.2,0.1,0.1,0.2,1,0.3,0.1,0.1,0.3,1),nrow=NUM_VAR, ncol=NUM_VAR)
+  as <- matrix(c(1,0.1,0.1,0.1,0.1,1,0.1,0.1,0.1,0.1,1,0.1,0.1,0.1,0.1,1),nrow=NUM_VAR, ncol=NUM_VAR)
   Ns <- c(1,1,1,1)
   time <- seq(0,100,0.01)
   
@@ -77,12 +78,26 @@ if (MULTI_VAR == TRUE) {
   states <- Ns
   
   multivar_log_comp <- function(time,state,params) {
-    
+    odes <- rep(NA,NUM_VAR)
     for (i in 1:NUM_VAR) {
-      
+      comp_sum <- 0
+      for (j in 1:NUM_VAR) { #this might be inefficient compared to an inner product
+        comp_sum <- comp_sum + params[i,2+j]*state[j] #but there are multiple type transformations
+      } #that I would have to do
+      Ni <- params[i,1]*state[i]*(1-(comp_sum/params[i,2]))
+      odes[i] <- Ni
     }
+    return(list(odes))
   }
   
+  out <- ode(y=states, times=time, func=multivar_log_comp, parms=params)
+  
+  df <- as.data.frame(out)
+  m_df <- melt(df, id=c('time'))
+  
+  p <- ggplot(m_df, aes(x = time, y = value, color = variable))
+  plot <- p + geom_line() + ylab("y") + ggtitle('Four Var. Growth w/ Comp.')
+  print(plot)
 }
 
 
