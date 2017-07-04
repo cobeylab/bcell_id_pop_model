@@ -9,8 +9,8 @@ library("deSolve")
 library("ggplot2")
 library("reshape2")
 
-ONE_VAR <- FALSE
-TWO_VAR <- FALSE
+ONE_VAR <- TRUE
+TWO_VAR <- TRUE
 MULTI_VAR <- TRUE
 
 if (ONE_VAR == TRUE) {
