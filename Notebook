@@ -11,3 +11,11 @@ Monday July 3,
     X get ggplot2 and make it work
     - try and abstract the code to N competing populations?
       * This ended up being really hard, I'm going to work on it tomorrow
+
+Tuesday July 4,
+  X Implement logistic growth w/ competition for N populations
+    * Not as slick as I thought because parameter entry
+    * Most of the code is abstracted
+    * Maybe there is an easier way to enter matrices in R
+      * I don't really want to use a file but I could
+  X Read Angeletti + Yewdell again
