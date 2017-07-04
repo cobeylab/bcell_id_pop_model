@@ -66,12 +66,13 @@ if (TWO_VAR == TRUE) {
 }
 
 if (MULTI_VAR == TRUE) {
-  NUM_VAR = 4
-  rs <- c(.1,.2,.3,.4)
-  ks <- c(300,250,200,150)
+  NUM_VAR = 5
+  rs <- c(.1,.1,.1,.1,.1)
+  ks <- c(100,100,100,100,100)
   #as <- matrix(c(1,0.1,0.1,0.1,0.1,1,0.2,0.1,0.1,0.2,1,0.3,0.1,0.1,0.3,1),nrow=NUM_VAR, ncol=NUM_VAR)
-  as <- matrix(c(1,0.1,0.1,0.1,0.1,1,0.1,0.1,0.1,0.1,1,0.1,0.1,0.1,0.1,1),nrow=NUM_VAR, ncol=NUM_VAR)
-  Ns <- c(1,1,1,1)
+  as <- matrix(c(1,0.1,0.1,0.1,0.1,0.1,1,0.1,0.1,0.1,0.1,0.1,1,0.1,0.1,0.1,0.1,0.1,1,0.1,0.1,0.1,0.1,0.1,1)
+               ,nrow=NUM_VAR, ncol=NUM_VAR)
+  Ns <- c(1,5,10,15,20)
   time <- seq(0,100,0.01)
   
   params <- data.frame(rs,ks,as) #each row contains set of params for ODE
@@ -96,7 +97,7 @@ if (MULTI_VAR == TRUE) {
   m_df <- melt(df, id=c('time'))
   
   p <- ggplot(m_df, aes(x = time, y = value, color = variable))
-  plot <- p + geom_line() + ylab("y") + ggtitle('Four Var. Growth w/ Comp.')
+  plot <- p + geom_line() + ylab("y") + ggtitle('Five Var. Growth w/ Comp.')
   print(plot)
 }
 
