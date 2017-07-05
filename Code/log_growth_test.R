@@ -5,13 +5,21 @@
 #install.packages("ggplot2")
 #install.packages("reshape2")
 
-library("deSolve")
-library("ggplot2")
-library("reshape2")
+ptm <- proc.time()
 
-ONE_VAR <- TRUE
-TWO_VAR <- TRUE
+library("deSolve") #ode solver
+library("ggplot2") #good data vis.
+library("reshape2") #data.frame reshaping
+
+ONE_VAR <- FALSE
+TWO_VAR <- FALSE
 MULTI_VAR <- TRUE
+
+#cbbPalette <- c("#000000", "#E69F00", "#56B4E9",
+#                "#009E73", "#F0E442", "#0072B2",
+#                "#D55E00", "#CC79A7") #colorblind friendly colors
+
+setwd("~/Desktop/CobeyLab/bcell_pop_id_model/Code")
 
 if (ONE_VAR == TRUE) {
   r <- 0.1
@@ -66,13 +74,12 @@ if (TWO_VAR == TRUE) {
 }
 
 if (MULTI_VAR == TRUE) {
-  NUM_VAR = 5
-  rs <- c(.1,.1,.1,.1,.1)
-  ks <- c(100,100,100,100,100)
-  #as <- matrix(c(1,0.1,0.1,0.1,0.1,1,0.2,0.1,0.1,0.2,1,0.3,0.1,0.1,0.3,1),nrow=NUM_VAR, ncol=NUM_VAR)
-  as <- matrix(c(1,0.1,0.1,0.1,0.1,0.1,1,0.1,0.1,0.1,0.1,0.1,1,0.1,0.1,0.1,0.1,0.1,1,0.1,0.1,0.1,0.1,0.1,1)
-               ,nrow=NUM_VAR, ncol=NUM_VAR)
-  Ns <- c(1,5,10,15,20)
+  #to increase number of populations, only change params and states
+  NUM_VAR = 10
+  rs <- c(.1,.11,.12,.13,.14,.15,.16,.17,.18,.19)
+  ks <- c(100,100,100,100,100,100,100,100,100,100)
+  as <- as.matrix(read.csv("comp_matrix.csv", header=FALSE))
+  Ns <- c(1,1,1,1,1,1,1,1,1,1)
   time <- seq(0,100,0.01)
   
   params <- data.frame(rs,ks,as) #each row contains set of params for ODE
@@ -82,9 +89,9 @@ if (MULTI_VAR == TRUE) {
     odes <- rep(NA,NUM_VAR)
     for (i in 1:NUM_VAR) {
       comp_sum <- 0
-      for (j in 1:NUM_VAR) { #this might be inefficient compared to an inner product
-        comp_sum <- comp_sum + params[i,2+j]*state[j] #but there are multiple type transformations
-      } #that I would have to do
+      for (j in 1:NUM_VAR) { #this is actually faster than an inner product
+        comp_sum <- comp_sum + params[i,2+j]*state[j] #because of class forcing
+      }
       Ni <- params[i,1]*state[i]*(1-(comp_sum/params[i,2]))
       odes[i] <- Ni
     }
@@ -94,14 +101,14 @@ if (MULTI_VAR == TRUE) {
   out <- ode(y=states, times=time, func=multivar_log_comp, parms=params)
   
   df <- as.data.frame(out)
-  m_df <- melt(df, id=c('time'))
+  m_df <- melt(df, id=c('time')) #turns ode output into melted data.frame
   
   p <- ggplot(m_df, aes(x = time, y = value, color = variable))
-  plot <- p + geom_line() + ylab("y") + ggtitle('Five Var. Growth w/ Comp.')
+  plot <- p + geom_line() + ylab("y") + ggtitle('Ten Var. Growth w/ Comp.')
+  #plot <- plot + scale_color_manual(values=cbbPalette)
   print(plot)
 }
 
+ptm2 <- proc.time()
 
-
-
-
+print(ptm2 - ptm)
