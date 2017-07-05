@@ -5,7 +5,7 @@
 #install.packages("ggplot2")
 #install.packages("reshape2")
 
-ptm <- proc.time()
+ptm <- proc.time() #timing
 
 library("deSolve") #ode solver
 library("ggplot2") #good data vis.
@@ -15,9 +15,9 @@ ONE_VAR <- FALSE
 TWO_VAR <- FALSE
 MULTI_VAR <- TRUE
 
-#cbbPalette <- c("#000000", "#E69F00", "#56B4E9",
-#                "#009E73", "#F0E442", "#0072B2",
-#                "#D55E00", "#CC79A7") #colorblind friendly colors
+cbbPalette <- c("#000000", "#E69F00", "#56B4E9",
+                "#009E73", "#F0E442", "#0072B2",
+                "#D55E00", "#CC79A7") #colorblind friendly colors
 
 setwd("~/Desktop/CobeyLab/bcell_pop_id_model/Code")
 
@@ -70,16 +70,17 @@ if (TWO_VAR == TRUE) {
   
   p <- ggplot(m_df, aes(x = time, y = value, color = variable))
   plot <- p + geom_line() + ylab("y") + ggtitle('Two Var. Growth w/ Comp.')
+  plot <- plot + scale_color_manual(values=cbbPalette)
   print(plot)
 }
 
 if (MULTI_VAR == TRUE) {
   #to increase number of populations, only change params and states
-  NUM_VAR = 10
-  rs <- c(.1,.11,.12,.13,.14,.15,.16,.17,.18,.19)
-  ks <- c(100,100,100,100,100,100,100,100,100,100)
+  NUM_VAR = 8
+  rs <- c(.1,.11,.12,.13,.14,.15,.16,.17)
+  ks <- c(100,100,100,100,100,100,100,100)
   as <- as.matrix(read.csv("comp_matrix.csv", header=FALSE))
-  Ns <- c(1,1,1,1,1,1,1,1,1,1)
+  Ns <- c(1,1,1,1,1,1,1,1)
   time <- seq(0,100,0.01)
   
   params <- data.frame(rs,ks,as) #each row contains set of params for ODE
@@ -104,11 +105,12 @@ if (MULTI_VAR == TRUE) {
   m_df <- melt(df, id=c('time')) #turns ode output into melted data.frame
   
   p <- ggplot(m_df, aes(x = time, y = value, color = variable))
-  plot <- p + geom_line() + ylab("y") + ggtitle('Ten Var. Growth w/ Comp.')
-  #plot <- plot + scale_color_manual(values=cbbPalette)
+  plot <- p + geom_line() + ylab("y") + ggtitle('Eight Var. Growth w/ Comp.')
+  plot <- plot + scale_color_manual(values=cbbPalette)
   print(plot)
 }
 
 ptm2 <- proc.time()
 
 print(ptm2 - ptm)
+
