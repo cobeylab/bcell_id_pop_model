@@ -12,7 +12,7 @@ phi <- 10 #AU
 a <- 0.1 #1/day
 dA <- 0.1 #1/dat
 alpha <- 0.0 #0.01 FOR FIM 0.0 o/w
-beta <- 0.0 #steric interference
+beta <- 0.95 #steric interference
 delta <- 0 #ZERO FOR EMM 1 o/w
 
 Hxys <- 1000
@@ -28,9 +28,9 @@ By <- 1
 Bs <- 1
 Ax <- 1
 Ay <- 1
-As <- 64
+As <- 512
 
-time <- seq(0,100,0.01)
+time <- seq(0,60,0.01)
 
 params <- c(k=k,df=df,db=db,s=s,phi=phi,a=a,dA=dA,alpha=alpha,beta=beta,delta=delta)
 states <- c(Hxys=Hxys,Hoys=Hoys,Hxos=Hxos,Hxyo=Hxyo,Hoos=Hoos,Hoyo=Hoyo,
