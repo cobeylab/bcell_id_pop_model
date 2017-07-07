@@ -11,8 +11,8 @@ library("deSolve") #ode solver
 library("ggplot2") #good data vis.
 library("reshape2") #data.frame reshaping
 
-ONE_VAR <- FALSE
-TWO_VAR <- FALSE
+ONE_VAR <- TRUE
+TWO_VAR <- TRUE
 MULTI_VAR <- TRUE
 
 cbbPalette <- c("#000000", "#E69F00", "#56B4E9",
@@ -77,7 +77,7 @@ if (TWO_VAR == TRUE) {
 if (MULTI_VAR == TRUE) {
   #to increase number of populations, only change params and states
   NUM_VAR = 8
-  rs <- c(.1,.11,.12,.13,.14,.15,.16,.17)
+  rs <- c(.11,.12,.13,.14,.15,.16,.17,.18)
   ks <- c(100,100,100,100,100,100,100,100)
   as <- as.matrix(read.csv("comp_matrix.csv", header=FALSE))
   Ns <- c(1,1,1,1,1,1,1,1)
