@@ -1,7 +1,7 @@
 # Modeling B Cell Immunodominance and Population Dynamics
-This repository just contains a bunch of PDFs of relevant papers for B cell population models
+This repository contains all of the work related to B-Cell Immunodominance and population dynamical models
 
-**Contains**:
+**Literature**:
 * Smith (1999)
   - from PNAS
 * Skowronski and Smith (2017)
@@ -17,3 +17,8 @@ This repository just contains a bunch of PDFs of relevant papers for B cell popu
 * Angeletti and Yewdell (2017)
   - from Nature
   - Note: This paper is useful for its *data*
+
+**Code**:
+* Basic Implementation
+  - Zarnitsyna et al. 2016 3 epitope model
+  - Code for scalable logistic growth with competition
