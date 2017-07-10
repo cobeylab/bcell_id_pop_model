@@ -77,11 +77,11 @@ if (TWO_VAR == TRUE) {
 if (MULTI_VAR == TRUE) {
   #to increase number of populations, only change params and states
   NUM_VAR = 8
-  rs <- c(.11,.12,.13,.14,.15,.16,.17,.18)
-  ks <- c(100,100,100,100,100,100,100,100)
-  as <- as.matrix(read.csv("comp_matrix.csv", header=FALSE))
-  Ns <- c(1,1,1,1,1,1,1,1)
-  time <- seq(0,100,0.01)
+  rs <- c(.11,.12,.13,.14,.15,.16,.17,.18) #r_i's
+  ks <- c(100,100,100,100,100,100,100,100) #k_i's
+  as <- as.matrix(read.csv("comp_matrix.csv", header=FALSE)) #imports matrix of alpha_ij's
+  Ns <- c(1,1,1,1,1,1,1,1) #initial states
+  time <- seq(0,100,0.01) #time vector length and granularity
   
   params <- data.frame(rs,ks,as) #each row contains set of params for ODE
   states <- Ns
