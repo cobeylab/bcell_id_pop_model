@@ -11,8 +11,8 @@ library("deSolve") #ode solver
 library("ggplot2") #good data vis.
 library("reshape2") #data.frame reshaping
 
-ONE_VAR <- TRUE
-TWO_VAR <- TRUE
+ONE_VAR <- FALSE
+TWO_VAR <- FALSE
 MULTI_VAR <- TRUE
 
 cbbPalette <- c("#000000", "#E69F00", "#56B4E9",
@@ -104,13 +104,13 @@ if (MULTI_VAR == TRUE) {
   df <- as.data.frame(out)
   m_df <- melt(df, id=c('time')) #turns ode output into melted data.frame
   
-  p <- ggplot(m_df, aes(x = time, y = value, color = variable))
-  plot <- p + geom_line() + ylab("y") + ggtitle('Eight Var. Growth w/ Comp.')
-  plot <- plot + scale_color_manual(values=cbbPalette)
+  p <- ggplot(m_df, aes(x = time, y = value, color = variable)) #basic plot
+  plot <- p + geom_line() + ylab("y") + ggtitle('Eight Var. Growth w/ Comp.') #labels
+  plot <- plot + scale_color_manual(values=cbbPalette) #better colors
   print(plot)
 }
 
 ptm2 <- proc.time()
 
-print(ptm2 - ptm)
+print(ptm2 - ptm) #timing for efficiency
 
