@@ -1,4 +1,4 @@
-#Exploring the bredth of behaviors possible with symmetric r terms
+#Exploring the behaviors possible with symmetric r terms
 
 #setwd("~/Desktop/CobeyLab/bcell_id_pop_model/Code/basic_implementations")
 
