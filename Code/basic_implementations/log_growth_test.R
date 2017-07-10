@@ -19,7 +19,7 @@ cbbPalette <- c("#000000", "#E69F00", "#56B4E9",
                 "#009E73", "#F0E442", "#0072B2",
                 "#D55E00", "#CC79A7") #colorblind friendly colors
 
-setwd("~/Desktop/CobeyLab/bcell_pop_id_model/Code")
+#setwd("~/Desktop/CobeyLab/bcell_id_pop_model/Code/basic_implementations")
 
 if (ONE_VAR == TRUE) {
   r <- 0.1
