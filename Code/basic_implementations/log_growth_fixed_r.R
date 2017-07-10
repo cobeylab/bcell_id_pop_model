@@ -17,7 +17,7 @@ cbbPalette <- c("#000000", "#E69F00", "#56B4E9",
 NUM_VAR = 5
 r <- 0.2
 rs <- rep(r, NUM_VAR) #r_i's
-ks <- c(140,130,120,110,100) #k_i's
+ks <- c(120,115,110,105,100) #k_i's
 as <- as.matrix(read.csv("fixed_r.csv", header=FALSE)) #imports matrix of alpha_ij's
 Ns <- c(1,1,1,1,5) #initial states
 time <- seq(0,100,0.1) #time vector length and granularity
