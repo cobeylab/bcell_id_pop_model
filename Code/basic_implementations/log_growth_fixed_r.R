@@ -1,6 +1,6 @@
 #Exploring the behaviors possible with symmetric r terms
 
-#setwd("~/Desktop/CobeyLab/bcell_id_pop_model/Code/basic_implementations")
+setwd("~/Desktop/CobeyLab/bcell_id_pop_model/Code/basic_implementations")
 
 #install.packages("deSolve")
 #install.packages("ggplot2")
@@ -19,7 +19,7 @@ r <- 0.2
 rs <- rep(r, NUM_VAR) #r_i's
 ks <- c(120,115,110,105,100) #k_i's
 as <- as.matrix(read.csv("fixed_r.csv", header=FALSE)) #imports matrix of alpha_ij's
-Ns <- c(1,1,1,1,5) #initial states
+Ns <- c(1,1,1,1,1) #initial states
 time <- seq(0,100,0.1) #time vector length and granularity
 
 params <- data.frame(rs,ks,as) #each row contains set of params for ODE
