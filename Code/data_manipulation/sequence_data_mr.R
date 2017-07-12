@@ -42,7 +42,7 @@ sequence_df_wide <- data.frame(names, aa_h_chain, aa_k_chain,
                                nt_h_sequence, nt_k_sequence, 
                                stringsAsFactors = FALSE)
 
-sequence_df_long <- m_df <- melt(sequence_df_wide, id=c('names')) #melts into long form data.frame
+sequence_df_long <- melt(sequence_df_wide, id=c('names')) #melts into long form data.frame
 
 write.table(sequence_df_wide, file=WIDE_OUTPUT)
 write.table(sequence_df_long, file=LONG_OUTPUT)
