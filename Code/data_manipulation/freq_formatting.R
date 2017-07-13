@@ -47,12 +47,14 @@ for (location in locations){
   comb_mat <- matrix(c(loc_mat,diff_mat), nrow=length(viruses), ncol=2*length(days))
   final_df <- as.data.frame(comb_mat,row.names=viruses)
   colnames(final_df) <- col_names
+
+
+  if (location == 'GC MLN') {
+    write.table(final_df, file=MLN_OUTPUT)
+  } else if (location == 'GC SPLN'){
+    write.table(final_df, file=SPLN_OUTPUT)
+  }
 }
-
-
-write.table(final_df, file=MLN_OUTPUT)
-write.table(final_df, file=SPLN_OUTPUT)
-
 
 
 
