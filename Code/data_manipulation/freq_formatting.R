@@ -49,11 +49,10 @@ for (location in locations){
   colnames(final_df) <- col_names
 }
 
-if (location == 'GC MLN') {
-  write.table(final_df, file=MLN_OUTPUT)
-} else if (location == 'GC SPLN')(
-  write.table(final_df, file=SPLN_OUTPUT)
-)
+
+write.table(final_df, file=MLN_OUTPUT)
+write.table(final_df, file=SPLN_OUTPUT)
+
 
 
 
