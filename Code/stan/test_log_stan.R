@@ -1,6 +1,7 @@
-#This file currently stalls out R, don't source
+#Estimates r for a single variable logistic growth with good data
 
 library('rstan')
+library('deSolve')
 
 setwd("~/Desktop/CobeyLab/bcell_id_pop_model/Code/stan")
 

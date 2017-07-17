@@ -20,7 +20,7 @@ transformed data {
 }
 parameters {
   real theta[1];
-  vector<lower=0>[1] sigma;
+  vector[1] sigma;
 }
 model {
   real y_hat[Time,1];
