@@ -1,3 +1,5 @@
+#This file currently stalls out R, don't source
+
 library('rstan')
 
 setwd("~/Desktop/CobeyLab/bcell_id_pop_model/Code/stan")
