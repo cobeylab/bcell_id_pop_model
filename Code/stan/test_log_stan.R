@@ -1,9 +1,12 @@
 #Estimates r for a single variable logistic growth with good data
+#With dense but more noisey data, still does well
 
 library('rstan')
 library('deSolve')
 
 setwd("~/Desktop/CobeyLab/bcell_id_pop_model/Code/stan")
+
+NOISE <- TRUE
 
 r <- 0.1
 k <- 100
@@ -12,6 +15,7 @@ Time <- 100
 deltaT <- 0.1
 nstep <- Time/deltaT
 t0 <- 0
+STD <- 5
 
 simple_model_params <- c(r = r, k = k)
 simple_state_val <- c(N = N)
@@ -26,7 +30,17 @@ simple_log_growth <- function(t, state, params) {
 
 out <- ode(y = simple_state_val, times = time, func = simple_log_growth, parms = simple_model_params)
 
-nums <- out[,'N']
+if (NOISE){
+  nums <- out[,'N']
+  for (i in 1:length(nums)){
+    nums[i] <- nums[i] + rnorm(1, sd=STD)
+    if (nums[i] < 0) {
+      nums[i] <- 0
+    }
+  }
+} else {
+  nums <- out[,'N']
+}
 
 y0 <- N
 
@@ -45,4 +59,4 @@ estimates <- stan(file = 'test_log.stan',
                   warmup = 500,
                   refresh = -1
 )
-
+#Decreasing warmup to 200 increases sampling time by like 15 minutes
