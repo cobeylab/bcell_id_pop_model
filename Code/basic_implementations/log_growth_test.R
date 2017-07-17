@@ -11,9 +11,9 @@ library("deSolve") #ode solver
 library("ggplot2") #good data vis.
 library("reshape2") #data.frame reshaping
 
-ONE_VAR <- FALSE
+ONE_VAR <- TRUE
 TWO_VAR <- FALSE
-MULTI_VAR <- TRUE
+MULTI_VAR <- FALSE
 
 cbbPalette <- c("#000000", "#E69F00", "#56B4E9",
                 "#009E73", "#F0E442", "#0072B2",
@@ -28,7 +28,7 @@ if (ONE_VAR == TRUE) {
   
   simple_model_params <- c(r = r, k = k)
   simple_state_val <- c(N = N)
-  time <- seq(0,100,0.01)
+  time <- seq(0,100,0.1)
   
   simple_log_growth <- function(t, state, params) {
     with(as.list(c(state, params)),{
