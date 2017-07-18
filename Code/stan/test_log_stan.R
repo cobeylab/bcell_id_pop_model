@@ -6,6 +6,11 @@ library('deSolve')
 
 setwd("~/Desktop/CobeyLab/bcell_id_pop_model/Code/stan")
 
+# These lines are for parallelization, but I think the task is too small
+# To warrant
+# rstan_options(auto_write = TRUE)
+# options(mc.cores = parallel::detectCores())
+
 NOISE <- TRUE
 
 r <- 0.1
