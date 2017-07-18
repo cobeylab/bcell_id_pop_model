@@ -8,8 +8,8 @@ setwd("~/Desktop/CobeyLab/bcell_id_pop_model/Code/stan")
 
 # These lines are for parallelization, but I think the task is too small
 # To warrant
-# rstan_options(auto_write = TRUE)
-# options(mc.cores = parallel::detectCores())
+rstan_options(auto_write = TRUE)
+options(mc.cores = parallel::detectCores())
 
 NOISE <- TRUE
 
@@ -20,7 +20,7 @@ Time <- 100
 deltaT <- 0.1
 nstep <- Time/deltaT
 t0 <- 0
-STD <- 5
+STD <- 1
 
 simple_model_params <- c(r = r, k = k)
 simple_state_val <- c(N = N)
@@ -65,3 +65,5 @@ estimates <- stan(file = 'test_log.stan',
                   refresh = -1
 )
 #Decreasing warmup to 200 increases sampling time by like 15 minutes
+#Dramatically increasing data ruins predictive power
+#Accurate with less steps also
