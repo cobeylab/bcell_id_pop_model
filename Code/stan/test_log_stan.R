@@ -11,16 +11,16 @@ setwd("~/Desktop/CobeyLab/bcell_id_pop_model/Code/stan")
 rstan_options(auto_write = TRUE)
 options(mc.cores = parallel::detectCores())
 
-NOISE <- TRUE
+NOISE <- FALSE
 
 r <- 0.1
 k <- 100
 N <- 1
 Time <- 100
-deltaT <- 0.1
+deltaT <- 0.01
 nstep <- Time/deltaT
 t0 <- 0
-STD <- 1
+STD <- 3
 
 simple_model_params <- c(r = r, k = k)
 simple_state_val <- c(N = N)
@@ -62,7 +62,8 @@ estimates <- stan(file = 'test_log.stan',
                   chains = 1,
                   iter = 1000,
                   warmup = 500,
-                  refresh = -1
+                  refresh = -1,
+                  control = list(adapt_delta = 0.9)
 )
 #Decreasing warmup to 200 increases sampling time by like 15 minutes
 #Dramatically increasing data ruins predictive power

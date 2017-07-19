@@ -12,15 +12,16 @@ data {
   real<lower=0> z[Time]; //measures of B
   real t0; //init value of t
   real ts[Time]; //values of t
-  real K[1];
+  real<lower=0> K[1];
 }
 transformed data {
   real x_r[1] = K;
   int x_i[0];
 }
 parameters {
-  real theta[1];
-  vector[1] sigma;
+  real<lower=0> theta[1];
+  // vector[1] sigma;
+  real<lower=0> sigma;
 }
 model {
   real y_hat[Time,1];
