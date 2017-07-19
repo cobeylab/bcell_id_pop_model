@@ -20,7 +20,7 @@ Time <- 100
 deltaT <- 0.01
 nstep <- Time/deltaT
 t0 <- 0
-STD <- 3
+STD <- 1
 
 simple_model_params <- c(r = r, k = k)
 simple_state_val <- c(N = N)
@@ -49,6 +49,15 @@ if (NOISE){
 
 y0 <- N
 
+dump_list <- list(Time = nstep,
+                  B0 = array(c(N), dim=1),
+                  K = array(c(k), dim=1),
+                  z  = nums,
+                  t0 = t0,
+                  ts = time)
+
+stan_rdump(dump_list, 'test_log.rdump')
+
 estimates <- stan(file = 'test_log.stan',
                   data = list (
                     Time  = nstep,
@@ -60,8 +69,8 @@ estimates <- stan(file = 'test_log.stan',
                   ),
                   seed = 42,
                   chains = 1,
-                  iter = 1000,
-                  warmup = 500,
+                  iter = 2000,
+                  warmup = 1000,
                   refresh = -1,
                   control = list(adapt_delta = 0.9)
 )
