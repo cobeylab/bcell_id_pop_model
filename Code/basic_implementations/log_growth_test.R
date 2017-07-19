@@ -11,9 +11,9 @@ library("deSolve") #ode solver
 library("ggplot2") #good data vis.
 library("reshape2") #data.frame reshaping
 
-ONE_VAR <- TRUE
+ONE_VAR <- FALSE
 TWO_VAR <- FALSE
-MULTI_VAR <- FALSE
+MULTI_VAR <- TRUE
 
 cbbPalette <- c("#000000", "#E69F00", "#56B4E9",
                 "#009E73", "#F0E442", "#0072B2",

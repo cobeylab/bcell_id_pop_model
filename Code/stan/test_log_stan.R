@@ -49,15 +49,6 @@ if (NOISE){
 
 y0 <- N
 
-dump_list <- list(Time = nstep,
-                  B0 = array(c(N), dim=1),
-                  K = array(c(k), dim=1),
-                  z  = nums,
-                  t0 = t0,
-                  ts = time)
-
-stan_rdump(dump_list, 'test_log.rdump')
-
 estimates <- stan(file = 'test_log.stan',
                   data = list (
                     Time  = nstep,
@@ -72,7 +63,7 @@ estimates <- stan(file = 'test_log.stan',
                   iter = 2000,
                   warmup = 1000,
                   refresh = -1,
-                  control = list(adapt_delta = 0.9)
+                  control = list(adapt_delta = 0.8)
 )
 #Decreasing warmup to 200 increases sampling time by like 15 minutes
 #Dramatically increasing data ruins predictive power
