@@ -4,12 +4,12 @@ library('deSolve')
 setwd("~/Desktop/CobeyLab/bcell_id_pop_model/Code/stan")
 
 NUM_VAR = 5
-rs <- c(.1,.2,.3,.4,.5) #r_i's
-ks <- c(100,100,100,100,100) #k_i's
+rs <- c(.1,.15,.2,.25,.3) #r_i's
+ks <- c(200,200,200,200,200) #k_i's
 as <- as.matrix(read.csv("stan_test.csv", header=FALSE)) #imports matrix of alpha_ij's
 Ns <- c(1,1,1,1,1) #initial states
 Time <- 100
-deltaT <- 0.01
+deltaT <- 1
 nstep <- Time/deltaT
 time <- seq(deltaT,Time,deltaT) #time vector length and granularity
 
@@ -40,14 +40,15 @@ estimates <- stan(file = '5log_test.stan',
                     B0 = Ns,
                     K = ks,
                     z  = nums,
-                    t0 = t0,
+                    t0 = 0,
                     ts = time
                   ),
                   seed = 42,
                   chains = 1,
                   iter = 1000,
                   warmup = 500,
-                  refresh = -1,
+                  refresh = 100,
                   control = list(adapt_delta = 0.8)
 )
 
+print(estimates)

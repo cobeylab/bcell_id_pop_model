@@ -25,20 +25,20 @@ transformed data {
 parameters {
   real<lower=0> theta[5];
   // vector[1] sigma;
-  real<lower=0> sigma;
+  real<lower=0> sigma[5];
 }
 model {
   real y_hat[Time,n];
   real z_hat[Time,n];
   for (i in 1:n) {
     theta[i] ~ normal(0,1);
+    sigma[i] ~ cauchy(0,2.5);
   }
-  sigma ~ cauchy(0,2.5);
   y_hat = integrate_ode_rk45(logistic, B0, t0, ts, theta, x_r, x_i);
   for (t in 1:Time) {
     for (i in 1:n) {
-      z_hat[t,n] = y_hat[t,n];
-      z[t,n] ~ normal(z_hat[t,n], sigma);
+      z_hat[t,i] = y_hat[t,i];
+      z[t,i] ~ normal(z_hat[t,i], sigma[i]);
     }
   }
 }
