@@ -13,11 +13,11 @@ options(mc.cores = parallel::detectCores())
 
 NOISE <- FALSE
 
-r <- 0.1
+r <- 0.2
 k <- 100
 N <- 1
 Time <- 100
-deltaT <- 0.01
+deltaT <- 5
 nstep <- Time/deltaT
 t0 <- 0
 STD <- 1
@@ -65,6 +65,8 @@ estimates <- stan(file = 'test_log.stan',
                   refresh = -1,
                   control = list(adapt_delta = 0.8)
 )
+
+print(estimates)
 #Decreasing warmup to 200 increases sampling time by like 15 minutes
 #Dramatically increasing data ruins predictive power
 #Accurate with less steps also

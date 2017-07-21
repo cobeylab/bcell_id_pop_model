@@ -3,13 +3,21 @@ library('deSolve')
 
 setwd("~/Desktop/CobeyLab/bcell_id_pop_model/Code/stan")
 
+ptm <- proc.time()
+
+rstan_options(auto_write = TRUE)
+options(mc.cores = parallel::detectCores())
+
+NOISE <- TRUE
+STD <- 1
+
 NUM_VAR = 5
 rs <- c(.1,.15,.2,.25,.3) #r_i's
-ks <- c(200,200,200,200,200) #k_i's
+ks <- c(100,100,100,100,100) #k_i's
 as <- as.matrix(read.csv("stan_test.csv", header=FALSE)) #imports matrix of alpha_ij's
 Ns <- c(1,1,1,1,1) #initial states
-Time <- 100
-deltaT <- 1
+Time <- 40
+deltaT <- 2
 nstep <- Time/deltaT
 time <- seq(deltaT,Time,deltaT) #time vector length and granularity
 
@@ -33,6 +41,17 @@ out <- ode(y=states, times=time, func=multivar_log_comp, parms=params)
 df <- as.data.frame(out)
 nums <- as.matrix(df[,-1])
 
+if (NOISE) {
+  for (i in 1:length(nums[,1])){
+    for (j in 1:length(nums[1,])){
+      nums[i,j] <- nums[i,j] + rnorm(1, sd=STD)
+      if (nums[i,j] < 0) {
+        nums[i,j] <- 0
+      }
+    }
+  }
+}
+
 estimates <- stan(file = '5log_test.stan',
                   data = list (
                     N = array(c(NUM_VAR),dim=1),
@@ -44,11 +63,12 @@ estimates <- stan(file = '5log_test.stan',
                     ts = time
                   ),
                   seed = 42,
-                  chains = 1,
-                  iter = 1000,
-                  warmup = 500,
+                  chains = 4,
+                  iter = 2000,
+                  warmup = 1000,
                   refresh = 100,
                   control = list(adapt_delta = 0.8)
 )
 
 print(estimates)
+
