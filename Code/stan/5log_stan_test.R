@@ -55,14 +55,13 @@ if (NOISE) {
 estimates <- stan(file = '5log_test.stan',
                   data = list (
                     N = array(c(NUM_VAR),dim=1),
-                    Time  = nstep,
+                    L  = nstep,
                     B0 = Ns,
                     K = ks,
                     z  = nums,
                     t0 = 0,
                     ts = time
                   ),
-                  seed = 42,
                   chains = 4,
                   iter = 2000,
                   warmup = 1000,

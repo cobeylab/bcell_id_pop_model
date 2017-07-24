@@ -10,11 +10,11 @@ functions {
 }
 data {
   int<lower=1> N[1];
-  int<lower=1> Time; // Num steps
+  int<lower=1> L; // Num steps
   real B0[5]; //init B state
-  real<lower=0> z[Time,N[1]]; //measures of B
+  real<lower=0> z[L,N[1]]; //measures of B
   real t0; //init value of t
-  real ts[Time]; //values of t
+  real ts[L]; //values of t
   real<lower=0> K[5];
 }
 transformed data {
@@ -28,14 +28,14 @@ parameters {
   real<lower=0> sigma[5];
 }
 model {
-  real y_hat[Time,n];
-  real z_hat[Time,n];
+  real y_hat[L,n];
+  real z_hat[L,n];
   for (i in 1:n) {
     theta[i] ~ normal(0,1);
     sigma[i] ~ cauchy(0,2.5);
   }
   y_hat = integrate_ode_rk45(logistic, B0, t0, ts, theta, x_r, x_i);
-  for (t in 1:Time) {
+  for (t in 1:L) {
     for (i in 1:n) {
       z_hat[t,i] = y_hat[t,i];
       z[t,i] ~ normal(z_hat[t,i], sigma[i]);

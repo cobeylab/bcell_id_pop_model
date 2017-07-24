@@ -35,6 +35,13 @@ This repository contains all of the work related to B-Cell Immunodominance and p
   * freq_formatting.R
     - takes GC_B_Freq.csv and produces the means and differences from S12
     - Produced mln and spln_freq_means.txt
+  * count_formatting.R
+    - same as freq_formatting but uses counts data
+* Stan
+  * test_log_stan.R & test_log.stan
+    - Implementation of basic logistic fitting from multiple time series
+  * 5log_stan_test.R & 5log_test.stan
+    - Fitting for a set of 5 ODEs assuming no competition
 
 **Data**
 * reidms.zip
