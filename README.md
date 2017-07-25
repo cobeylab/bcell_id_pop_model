@@ -51,7 +51,11 @@ This repository contains all of the work related to B-Cell Immunodominance and p
   * Ab sequences --- .txt
 * transformations
   * GC_B_Freq.csv
+  * GC_B_Count.csv
+  * ELISA_AUC.csv
   * long_form_sequence_data.txt
   * wide_form_sequence_data.txt
   * mln_bcell_freq_means.txt
   * spln_bcell_freq_means.txt
+  * mln_bcell_count_means.txt
+  * spln_bcell_count_means.txt
