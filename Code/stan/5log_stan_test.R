@@ -16,8 +16,8 @@ rs <- c(.1,.15,.2,.25,.3) #r_i's
 ks <- c(100,100,100,100,100) #k_i's
 as <- as.matrix(read.csv("stan_test.csv", header=FALSE)) #imports matrix of alpha_ij's
 Ns <- c(1,1,1,1,1) #initial states
-Time <- 40
-deltaT <- 2
+Time <- 100
+deltaT <- 1
 nstep <- Time/deltaT
 time <- seq(deltaT,Time,deltaT) #time vector length and granularity
 

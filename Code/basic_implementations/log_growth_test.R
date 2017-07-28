@@ -11,9 +11,9 @@ library("deSolve") #ode solver
 library("ggplot2") #good data vis.
 library("reshape2") #data.frame reshaping
 
-ONE_VAR <- FALSE
+ONE_VAR <- TRUE
 TWO_VAR <- FALSE
-MULTI_VAR <- TRUE
+MULTI_VAR <- FALSE
 
 cbbPalette <- c("#000000", "#E69F00", "#56B4E9",
                 "#009E73", "#F0E442", "#0072B2",
@@ -22,8 +22,8 @@ cbbPalette <- c("#000000", "#E69F00", "#56B4E9",
 #setwd("~/Desktop/CobeyLab/bcell_id_pop_model/Code/basic_implementations")
 
 if (ONE_VAR == TRUE) {
-  r <- 0.1
-  k <- 100
+  r <- 0.2
+  k <- 500000
   N <- 1
   
   simple_model_params <- c(r = r, k = k)
