@@ -13,10 +13,10 @@ options(mc.cores = parallel::detectCores())
 NOISE <- TRUE
 MULTI_SERIES <- TRUE
 
-r <- 0.1
+r <- 0.15
 k <- 500
 N <- 1
-Time <- 50
+Time <- 100
 deltaT <- 5
 nstep <- Time/deltaT
 t0 <- 0
