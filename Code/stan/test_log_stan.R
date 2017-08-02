@@ -10,13 +10,13 @@ setwd("~/Desktop/CobeyLab/bcell_id_pop_model/Code/stan")
 rstan_options(auto_write = TRUE)
 options(mc.cores = parallel::detectCores())
 
-NOISE <- FALSE
+NOISE <- TRUE
 MULTI_SERIES <- TRUE
 
-r <- 0.2
+r <- 0.1
 k <- 500
 N <- 1
-Time <- 100
+Time <- 50
 deltaT <- 5
 nstep <- Time/deltaT
 t0 <- 0

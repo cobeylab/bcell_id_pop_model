@@ -23,7 +23,7 @@ cbbPalette <- c("#000000", "#E69F00", "#56B4E9",
 
 if (ONE_VAR == TRUE) {
   r <- 0.2
-  k <- 500000
+  k <- 500
   N <- 1
   
   simple_model_params <- c(r = r, k = k)

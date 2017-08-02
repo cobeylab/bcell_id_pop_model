@@ -31,7 +31,7 @@ model {
   real y_hat[L,n];
   real z_hat[L,n];
   for (i in 1:n) {
-    theta[i] ~ uniform(0,1);
+    theta[i] ~ normal(0,1);
     sigma[i] ~ cauchy(0,2.5);
   }
   y_hat = integrate_ode_rk45(logistic, B0, t0, ts, theta, x_r, x_i);
