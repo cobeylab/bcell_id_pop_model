@@ -1,7 +1,7 @@
 library('rstan')
 library('deSolve')
 
-setwd("~/Desktop/CobeyLab/bcell_id_pop_model/Code/stan")
+setwd("~/Desktop/CobeyLab/bcell_id_pop_model/Code/stan/tests")
 
 ptm <- proc.time()
 

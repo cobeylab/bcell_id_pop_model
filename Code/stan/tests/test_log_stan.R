@@ -4,7 +4,7 @@
 library('rstan')
 library('deSolve')
 
-setwd("~/Desktop/CobeyLab/bcell_id_pop_model/Code/stan")
+setwd("~/Desktop/CobeyLab/bcell_id_pop_model/Code/stan/tests")
 
 # These lines are for parallelization locally
 rstan_options(auto_write = TRUE)
