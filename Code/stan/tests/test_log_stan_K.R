@@ -1,4 +1,4 @@
-#Estimates r for a single variable logistic growth with good data
+#Estimates K for a single variable logistic growth with good data
 #With dense but more noisy data, still does well
 
 library('rstan')
@@ -18,7 +18,7 @@ r <- 0.5
 k <- 1000
 N <- 1
 Time <- 40
-deltaT <- 8
+deltaT <- 10
 nstep <- Time/deltaT
 t0 <- 0
 STD <- 0.5
@@ -80,12 +80,12 @@ if (!MULTI_SERIES) {
   }
 }
 
-estimates <- stan(file = 'test_log.stan',
+estimates <- stan(file = 'test_log_K.stan',
                   data = list (
                     N = array(c(NUM_SERIES),dim=1),
                     L  = nstep,
                     B0 = array(c(N), dim=1),
-                    K = array(c(k), dim=1),
+                    r = array(c(r), dim=1),
                     z  = nums,
                     t0 = t0,
                     ts = time
@@ -98,4 +98,3 @@ estimates <- stan(file = 'test_log.stan',
 )
 
 print(estimates)
-

@@ -2,7 +2,7 @@
 functions {
   real[] logistic(real t, real[] B, real[] theta, real[] x_r, int[] x_i){
     real dBdt[1];
-    dBdt[1] = theta[1]*B[1]*(1 - (B[1]/x_r[1]));
+    dBdt[1] = x_r[1]*B[1]*(1 - (B[1]/theta[1]));
     return dBdt;
   }
 }
@@ -14,11 +14,11 @@ data {
   real<lower=0> z[L,N[1]]; //measures of B
   real t0; //init value of t
   real ts[L]; //values of t
-  real<lower=0> K[1];
+  real<lower=0> r[1];
 }
 transformed data {
   int n = N[1];
-  real x_r[1] = K;
+  real x_r[1] = r;
   int x_i[0];
 }
 parameters {

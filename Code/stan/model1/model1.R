@@ -7,7 +7,7 @@ library("reshape2") #data.frame reshaping
 setwd("~/Desktop/CobeyLab/bcell_id_pop_model/Code/stan/model1")
 
 DUMMY_DATA <- TRUE
-PLOT <- TRUE
+PLOT <- FALSE
 
 cbbPalette <- c("#000000", "#E69F00", "#56B4E9",
                 "#009E73", "#F0E442", "#0072B2",
@@ -20,12 +20,13 @@ if (DUMMY_DATA){
   b_f <- 0.005
   M <- 13000
   gamma <- 0.1
-  tau <- 0.5
-  t_peak <- 14 #days
+  tau <- 0.01
+  t_peak <- 21 #days
   mu <- 0.1
   
   Time <- 40
-  deltaT <- 1
+  deltaT <- 4
+  t0 <- 0
   nstep <- Time/deltaT
   time <- seq(deltaT,Time,deltaT)
   
@@ -44,11 +45,11 @@ if (DUMMY_DATA){
   model1dummy <- function(t, state, parms){
     with(as.list(c(state, parms)),{
       if (t < t_peak) {
-        dB <- ((Ags*tau)/AC50)*(1 - state[1]/(M*b_i))
+        dB <- ((Ags*tau)/AC50)*B*(1 - B/(M*b_i))
       } else {
-        dB <- ((Ags*tau)/AC50)*(1 - state[1]/(M*b_f))
+        dB <- ((Ags*tau)/AC50)*B*(1 - B/(M*b_f))
       }
-      dA <- gamma*state[1] - mu*state[2]
+      dA <- gamma*B - mu*A
       list(c(dB,dA))
     })
   }
@@ -64,3 +65,26 @@ if (PLOT) {
   plot <- plot + scale_color_manual(values=cbbPalette)
   print(plot)
 }
+
+dummy_data <- dummy[,-1]
+
+estimates <- stan(file = 'model1.stan',
+                  data = list (
+                    n  = nstep,
+                    B0 = state_vals,
+                    z  = dummy[,-1],
+                    t0 = t0,
+                    ts = time,
+                    Ags = Ags,
+                    AC50 = AC50,
+                    bi = b_i,
+                    bf = b_f
+                  ),
+                  chains = 4,
+                  iter = 2000,
+                  warmup = 1000,
+                  refresh = 100,
+                  control = list(adapt_delta = 0.8)
+)
+
+print(estimates)

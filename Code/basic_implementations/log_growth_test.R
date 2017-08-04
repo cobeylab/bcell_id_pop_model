@@ -22,8 +22,8 @@ cbbPalette <- c("#000000", "#E69F00", "#56B4E9",
 #setwd("~/Desktop/CobeyLab/bcell_id_pop_model/Code/basic_implementations")
 
 if (ONE_VAR == TRUE) {
-  r <- 0.1
-  k <- 500
+  r <- 3.3
+  k <- 650
   N <- 1
   
   simple_model_params <- c(r = r, k = k)
