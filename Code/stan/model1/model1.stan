@@ -36,9 +36,15 @@ transformed data {
 
 parameters {
   real theta[5]; // M, gamma, tau, t_peak, mu
-  real<lower=0> sigma;
+  real<lower=0> sigma[2];
 }
 
 model {
+  real z_hat[n,2];
+  z_hat = integrate_ode_rk45(model1, B0, t0, ts, theta, x_r, x_i);
+  for (i in 1:n){
+    z[i,1] ~ normal(z_hat[i,1],sigma[1]);
+    z[i,2] ~ normal(z_hat[i,2],sigma[2]);
+  }
 
 }
