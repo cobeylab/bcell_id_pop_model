@@ -14,11 +14,11 @@ NOISE <- TRUE
 MULTI_SERIES <- TRUE
 NUM_SERIES <- 10
 
-r <- 0.5
-k <- 1000
+r <- 1
+k <- 500
 N <- 1
-Time <- 40
-deltaT <- 10
+Time <- 42
+deltaT <- 7
 nstep <- Time/deltaT
 t0 <- 0
 STD <- 0.5
@@ -94,6 +94,7 @@ estimates <- stan(file = 'test_log_K.stan',
                   iter = 2000,
                   warmup = 1000,
                   refresh = 100,
+                  sample_file = 'K_sample.csv',
                   control = list(adapt_delta = 0.8)
 )
 

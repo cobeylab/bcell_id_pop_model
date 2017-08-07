@@ -22,7 +22,7 @@ transformed data {
   int x_i[0];
 }
 parameters {
-  real<lower=0> theta[1];
+  real<lower=0,upper=1> theta[1];
   // vector[1] sigma;
   real<lower=0> sigma;
 }

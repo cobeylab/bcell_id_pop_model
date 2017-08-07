@@ -12,13 +12,14 @@ options(mc.cores = parallel::detectCores())
 
 NOISE <- TRUE
 MULTI_SERIES <- TRUE
-NUM_SERIES <- 10
+NUM_SERIES <- 5
+VERBOSE <- TRUE
 
-r <- 0.5
+r <- 0.3
 k <- 1000
 N <- 1
-Time <- 40
-deltaT <- 8
+Time <- 42
+deltaT <- 7
 nstep <- Time/deltaT
 t0 <- 0
 STD <- 0.5
@@ -94,6 +95,7 @@ estimates <- stan(file = 'test_log.stan',
                   iter = 2000,
                   warmup = 1000,
                   refresh = 100,
+                  verbose = VERBOSE,
                   control = list(adapt_delta = 0.8)
 )
 

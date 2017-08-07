@@ -36,8 +36,21 @@ transformed data {
 }
 
 parameters {
-  real theta[5]; // M, gamma, tau, t_peak, mu
+  real<lower=0> M;
+  real<lower=0,upper=5> gamma;
+  real<lower=0,upper=1> tau;
+  real<lower=0,upper=max(ts)> t_peak;
+  real<lower=0,upper=5> mu;
   real<lower=0> sigma[2];
+}
+
+transformed parameters {
+  real theta[5]; // M, gamma, tau, t_peak, mu
+  theta[1] = M;
+  theta[2] = gamma;
+  theta[3] = tau;
+  theta[4] = t_peak;
+  theta[5] = mu;
 }
 
 model {

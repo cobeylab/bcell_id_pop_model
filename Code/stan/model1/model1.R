@@ -13,6 +13,9 @@ cbbPalette <- c("#000000", "#E69F00", "#56B4E9",
                 "#009E73", "#F0E442", "#0072B2",
                 "#D55E00", "#CC79A7") #colorblind friendly colors
 
+rstan_options(auto_write = TRUE)
+options(mc.cores = parallel::detectCores())
+
 if (DUMMY_DATA){
   Ags <- 66 #nM
   AC50 <- 2
@@ -30,7 +33,7 @@ if (DUMMY_DATA){
   nstep <- Time/deltaT
   time <- seq(deltaT,Time,deltaT)
   
-  state_vals <- c(B=1,A=0)
+  state_vals <- c(B=1,A=0.001)
   params <- c(Ags=Ags,
               AC50=AC50,
               b_i=b_i,
@@ -83,7 +86,8 @@ estimates <- stan(file = 'model1.stan',
                   chains = 4,
                   iter = 2000,
                   warmup = 1000,
-                  refresh = 100,
+                  refresh = 1,
+                  sample_file = 'model1_samples.csv',
                   control = list(adapt_delta = 0.8)
 )
 
