@@ -36,20 +36,20 @@ transformed data {
 }
 
 parameters {
-  real M;
+  real m;
   real<lower=0> gamma;
   real<lower=0,upper=1> tau;
-  real<lower=0,upper=max(ts)> t_peak;
+  real<lower=0,upper=max(ts)> tp;
   real<lower=0> mu;
   real<lower=0> sigma[2];
 }
 
 transformed parameters {
   real theta[5]; // M, gamma, tau, t_peak, mu
-  theta[1] = 13000 + 1000*M;
+  theta[1] = 13000 + 1000*m;
   theta[2] = gamma;
   theta[3] = tau;
-  theta[4] = t_peak;
+  theta[4] = 21 + 5*tp;
   theta[5] = mu;
 }
 
@@ -59,9 +59,9 @@ model {
   sigma[2] ~ student_t(3,0,1);
   gamma ~ normal(0,1);
   mu ~ normal(0,1);
-  M ~ normal(0,1);
+  m ~ normal(0,1);
   tau ~ normal(0,1);
-  t_peak ~ uniform(0,max(ts));
+  tp ~ normal(0,1);
   z_hat = integrate_ode_rk45(model1, B0, t0, ts, theta, x_r, x_i);
   for (i in 1:n){
     z[i,1] ~ normal(z_hat[i,1],sigma[1]);

@@ -87,7 +87,7 @@ estimates <- stan(file = 'model1.stan',
                   iter = 2000,
                   warmup = 1000,
                   refresh = 1,
-                  sample_file = 'model1_samples_wips.csv',
+                  sample_file = 'model1_samples_rigidt.csv',
                   control = list(adapt_delta = 0.8,
                                  max_treedepth = 10)
 )
