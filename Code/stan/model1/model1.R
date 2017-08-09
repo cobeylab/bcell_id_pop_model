@@ -7,7 +7,7 @@ library("reshape2") #data.frame reshaping
 setwd("~/Desktop/CobeyLab/bcell_id_pop_model/Code/stan/model1")
 
 DUMMY_DATA <- TRUE
-PLOT <- FALSE
+PLOT <- TRUE
 
 cbbPalette <- c("#000000", "#E69F00", "#56B4E9",
                 "#009E73", "#F0E442", "#0072B2",
@@ -22,7 +22,7 @@ if (DUMMY_DATA){
   b_i <- 0.05
   b_f <- 0.005
   M <- 13000
-  gamma <- 0.1
+  gamma <- 0.2
   tau <- 0.01
   t_peak <- 21 #days
   mu <- 0.1
@@ -87,7 +87,7 @@ estimates <- stan(file = 'model1.stan',
                   iter = 2000,
                   warmup = 1000,
                   refresh = 1,
-                  sample_file = 'model1_samples_rigidt.csv',
+                  sample_file = 'model1_samples_gammainc.csv',
                   control = list(adapt_delta = 0.8,
                                  max_treedepth = 10)
 )
