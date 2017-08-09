@@ -39,7 +39,7 @@ parameters {
   real m;
   real<lower=0> gamma;
   real<lower=0,upper=1> tau;
-  real<lower=0,upper=max(ts)> tp;
+  real tp;
   real<lower=0> mu;
   real<lower=0> sigma[2];
 }
