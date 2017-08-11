@@ -1,4 +1,4 @@
-// saved as model1.stan
+// saved as model1_stiff.stan
 
 functions {
   real[] model1(real t, real[] B, real[] theta, real[] x_r, int[] x_i){
@@ -62,7 +62,8 @@ model {
   m ~ normal(0,1);
   tau ~ normal(0,1);
   tp ~ normal(0,1);
-  z_hat = integrate_ode_rk45(model1, B0, t0, ts, theta, x_r, x_i);
+  // z_hat = integrate_ode_rk45(model1, B0, t0, ts, theta, x_r, x_i); non-stiff solver
+  z_hat = integrate_ode_bdf(model1, B0, t0, ts, theta, x_r, x_i); //stiff solver
   for (i in 1:n){
     z[i,1] ~ normal(z_hat[i,1],sigma[1]);
     z[i,2] ~ normal(z_hat[i,2],sigma[2]);

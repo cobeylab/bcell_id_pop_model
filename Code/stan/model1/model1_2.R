@@ -22,7 +22,7 @@ if (DUMMY_DATA){
   b_i <- 0.05
   b_f <- 0.005
   M <- 13000
-  gamma <- 0.1
+  gamma <- 0.2
   tau <- 0.01
   t_peak <- 21 #days
   mu <- 0.1
@@ -71,7 +71,7 @@ if (PLOT) {
 
 dummy_data <- dummy[,-1]
 
-estimates <- stan(file = 'model1_stiff.stan',
+estimates <- stan(file = 'model1.stan',
                   data = list (
                     n  = nstep,
                     B0 = state_vals,
@@ -87,7 +87,7 @@ estimates <- stan(file = 'model1_stiff.stan',
                   iter = 2000,
                   warmup = 1000,
                   refresh = 1,
-                  sample_file = 'model1_samples_stiffsolve_td12.csv',
+                  sample_file = 'model1_samples_td12.csv',
                   control = list(adapt_delta = 0.8,
                                  max_treedepth = 12)
 )
