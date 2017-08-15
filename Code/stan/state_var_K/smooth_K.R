@@ -22,7 +22,7 @@ if (DUMMY_DATA){
   M <- 13000
   tau <- 0.01
   t_peak <- 21 #days
-  omega <- -3
+  omega <- -1
   
   Time <- 42
   deltaT <- 1
@@ -40,11 +40,7 @@ if (DUMMY_DATA){
   
   model_func <- function(t, state, parms){
     with(as.list(c(state, parms)),{
-      if (t <= t_peak) {
-        dK <- 0
-      } else {
-        dK <- omega*(t-t_peak)
-      }
+      dK <- omega*t
       dB <- ((Ags*tau)/AC50)*B*(1 - B/K)
       list(c(dB,dK))
     })
@@ -64,7 +60,7 @@ if (PLOT) {
 
 dummy_data <- dummy[,-1]
 
-estimates <- stan(file = 'state_var_K.stan',
+estimates <- stan(file = 'smooth_K.stan',
                   data = list (
                     n  = nstep,
                     B0 = state_vals[1],
@@ -74,7 +70,6 @@ estimates <- stan(file = 'state_var_K.stan',
                     Ags = Ags,
                     AC50 = AC50,
                     bi = b_i,
-                    tw = t_peak,
                     omega = omega
                   ),
                   chains = 4,
