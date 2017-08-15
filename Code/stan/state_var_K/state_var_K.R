@@ -6,7 +6,7 @@ library("reshape2") #data.frame reshaping
 setwd("~/Desktop/CobeyLab/bcell_id_pop_model/Code/stan/state_var_K")
 
 DUMMY_DATA <- TRUE
-PLOT <- TRUE
+PLOT <- FALSE
 
 cbbPalette <- c("#000000", "#E69F00", "#56B4E9",
                 "#009E73", "#F0E442", "#0072B2",
@@ -25,7 +25,7 @@ if (DUMMY_DATA){
   omega <- -3
   
   Time <- 42
-  deltaT <- 1
+  deltaT <- 7
   t0 <- 0
   nstep <- Time/deltaT
   time <- seq(deltaT,Time,deltaT)
@@ -81,6 +81,7 @@ estimates <- stan(file = 'state_var_K.stan',
                   iter = 2000,
                   warmup = 1000,
                   refresh = 100,
+                  sample_file = 'state_var_K_samples.csv',
                   control = list(adapt_delta = 0.8,
                                  max_treedepth = 10)
 )
