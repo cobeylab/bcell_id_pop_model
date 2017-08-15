@@ -23,7 +23,7 @@ if (DUMMY_DATA){
   AC50 <- 2
   b_i <- 0.1
   M <- 13000
-  tau <- 0.03
+  tau <- 0.01
   t_peak <- 21 #days
   omega <- -3
   
@@ -96,8 +96,7 @@ if (STAN) {
                     iter = 2000,
                     warmup = 1000,
                     refresh = 100,
-                    sample_file = 'state_var_K_samples_increase_tau_new_prior.csv',
-                    control = list(adapt_delta = 0.8,
+                    control = list(adapt_delta = 0.99,
                                    max_treedepth = 10)
   )
   
