@@ -96,7 +96,7 @@ if (STAN) {
                     iter = 2000,
                     warmup = 1000,
                     refresh = 100,
-                    sample_file = 'state_var_K_samples_increase_tau.csv',
+                    sample_file = 'state_var_K_samples_increase_tau_new_prior.csv',
                     control = list(adapt_delta = 0.8,
                                    max_treedepth = 10)
   )
