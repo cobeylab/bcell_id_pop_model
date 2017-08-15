@@ -6,7 +6,10 @@ library("reshape2") #data.frame reshaping
 setwd("~/Desktop/CobeyLab/bcell_id_pop_model/Code/stan/state_var_K")
 
 DUMMY_DATA <- TRUE
+NOISE <- TRUE
 PLOT <- FALSE
+STAN <- TRUE
+STD <- 5
 
 cbbPalette <- c("#000000", "#E69F00", "#56B4E9",
                 "#009E73", "#F0E442", "#0072B2",
@@ -52,6 +55,17 @@ if (DUMMY_DATA){
   dummy <- ode(y = state_vals, times = time, func = model_func, parms = params)
 }
 
+if (NOISE) {
+  for (i in 1:length(dummy[,1])){
+    for (j in 2:length(dummy[1,])){
+      dummy[i,j] <- dummy[i,j] + rnorm(1,sd=STD)
+      if (dummy[i,j] < 0) {
+        dummy[i,j] <- 0
+      }
+    }
+  }
+}
+
 if (PLOT) {
   df <- as.data.frame(dummy)
   m_df <- melt(df, id=c('time'))
@@ -64,26 +78,28 @@ if (PLOT) {
 
 dummy_data <- dummy[,-1]
 
-estimates <- stan(file = 'state_var_K.stan',
-                  data = list (
-                    n  = nstep,
-                    B0 = state_vals[1],
-                    z  = dummy[,-1],
-                    t0 = t0,
-                    ts = time,
-                    Ags = Ags,
-                    AC50 = AC50,
-                    bi = b_i,
-                    tw = t_peak,
-                    omega = omega
-                  ),
-                  chains = 4,
-                  iter = 2000,
-                  warmup = 1000,
-                  refresh = 100,
-                  sample_file = 'state_var_K_samples.csv',
-                  control = list(adapt_delta = 0.8,
-                                 max_treedepth = 10)
-)
-
-print(estimates)
+if (STAN) {
+  estimates <- stan(file = 'state_var_K.stan',
+                    data = list (
+                      n  = nstep,
+                      B0 = state_vals[1],
+                      z  = dummy_data,
+                      t0 = t0,
+                      ts = time,
+                      Ags = Ags,
+                      AC50 = AC50,
+                      bi = b_i,
+                      tw = t_peak,
+                      omega = omega
+                    ),
+                    chains = 4,
+                    iter = 2000,
+                    warmup = 1000,
+                    refresh = 100,
+                    sample_file = 'state_var_K_samples_noise_sparse.csv',
+                    control = list(adapt_delta = 0.8,
+                                   max_treedepth = 10)
+  )
+  
+  print(estimates)
+}
