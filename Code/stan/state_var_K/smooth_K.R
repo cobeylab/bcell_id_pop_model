@@ -25,7 +25,7 @@ if (DUMMY_DATA){
   omega <- -1
   
   Time <- 42
-  deltaT <- 1
+  deltaT <- 7
   t0 <- 0
   nstep <- Time/deltaT
   time <- seq(deltaT,Time,deltaT)
@@ -76,8 +76,8 @@ estimates <- stan(file = 'smooth_K.stan',
                   iter = 2000,
                   warmup = 1000,
                   refresh = 100,
-                  sample_file = 'smooth_K_samples.csv',
-                  control = list(adapt_delta = 0.8,
+                  sample_file = 'smooth_K_samples_sparse_delta99.csv',
+                  control = list(adapt_delta = 0.99,
                                  max_treedepth = 10)
 )
 
