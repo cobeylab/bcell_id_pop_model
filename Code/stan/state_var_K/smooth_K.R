@@ -76,6 +76,7 @@ estimates <- stan(file = 'smooth_K.stan',
                   iter = 2000,
                   warmup = 1000,
                   refresh = 100,
+                  sample_file = 'smooth_K_samples.csv',
                   control = list(adapt_delta = 0.8,
                                  max_treedepth = 10)
 )
