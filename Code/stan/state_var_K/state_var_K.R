@@ -5,11 +5,11 @@ library("reshape2") #data.frame reshaping
 
 setwd("~/Desktop/CobeyLab/bcell_id_pop_model/Code/stan/state_var_K")
 
-DUMMY_DATA <- TRUE
-NOISE <- TRUE
-PLOT <- FALSE
-STAN <- TRUE
-STD <- 5
+DUMMY_DATA <- 1
+NOISE <- 1
+PLOT <- 0
+STAN <- 1
+STD <- 10
 
 cbbPalette <- c("#000000", "#E69F00", "#56B4E9",
                 "#009E73", "#F0E442", "#0072B2",
@@ -22,9 +22,9 @@ if (DUMMY_DATA){
   Ags <- 66 #nM
   AC50 <- 2
   b_i <- 0.1
-  M <- 13000
-  tau <- 0.01
-  t_peak <- 21 #days
+  M <- 15000
+  tau <- 0.015
+  t_peak <- 14 #days
   omega <- -3
   
   Time <- 42
