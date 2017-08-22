@@ -5,13 +5,14 @@ functions{
   real dXdt[4];
   dXdt[1] = (x_r[4]/x_r[1])*B[1]*(1-((B[1] + theta[1]*B[2])/B[3]));
   dXdt[2] = (x_r[5]/x_r[2])*B[2]*(1-((B[2] + theta[1]*B[1])/B[4]));
-  if (t < x_r[7]){
-    dXdt[3] = 0;
-    dXdt[4] = 0;
-  } else {
-    dXdt[3] = x_r[6]*(t - x_r[7]);
-    dXdt[4] = x_r[6]*(t - x_r[7]);
-  }
+    if (t < x_r[7]){
+      dXdt[3] = 0;
+      dXdt[4] = 0;
+    } else {
+      dXdt[3] = x_r[6]*(t - x_r[7]);
+      dXdt[4] = x_r[6]*(t - x_r[7]);
+    }
+  return dXdt;
   }
 }
 

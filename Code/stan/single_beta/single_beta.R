@@ -16,19 +16,22 @@ cbbPalette <- c("#000000", "#E69F00", "#56B4E9",
                 "#009E73", "#F0E442", "#0072B2",
                 "#D55E00", "#CC79A7") #colorblind friendly colors
 
+rstan_options(auto_write = TRUE)
+options(mc.cores = parallel::detectCores())
+
 if (DUMMY_DATA) {
   taus <- c(.7,.7)
   c_50s <- c(2,1.8)
   rho <- 7000
-  beta <- 0.1
+  beta <- 0.25
   omega <- -3
   Bs <- c(1590,1412)
   t_peak <- 7 
   TIME <- 28
   deltaT <- 1
   t0 <- 0
-  nstep <- TIME/deltaT + 1
-  time <- seq(0,TIME,deltaT)
+  nstep <- TIME/deltaT
+  time <- seq(deltaT,TIME,deltaT)
   
   tv_params <- c(taus=taus,c_50s=c_50s,rho=rho,beta=beta,omega=omega,t_peak=t_peak)
   tv_state <- c(B1=Bs[1],B2=Bs[2],K1=rho/c_50s[1],K2=rho/c_50s[2])
@@ -78,9 +81,9 @@ if (STAN) {
                     chains = 4,
                     iter = 2000,
                     warmup = 1000,
-                    refresh = 100,
-                    control = list(adapt_delta = 0.99,
-                                   max_treedepth = 10)
+                    refresh = 10,
+                    control = list(adapt_delta = 0.8,
+                                   max_treedepth = 6)
   )
   
   print(estimates)
