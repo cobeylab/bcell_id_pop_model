@@ -5,12 +5,12 @@ library("reshape2") #data.frame reshaping
 
 setwd("~/Desktop/CobeyLab/bcell_id_pop_model/Code/stan/state_var_K")
 
-DUMMY_DATA <- 0
-NOISE <- 0
-PLOT <- 0
+DUMMY_DATA <- 1
+NOISE <- 1
+PLOT <- 1
 STAN <- 0
-FIT_PLOT <- 1
-STD <- 10
+FIT_PLOT <- 0
+STD <- 1
 
 cbbPalette <- c("#000000", "#E69F00", "#56B4E9",
                 "#009E73", "#F0E442", "#0072B2",

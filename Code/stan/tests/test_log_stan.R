@@ -19,7 +19,7 @@ r <- 0.3
 k <- 1000
 N <- 1
 Time <- 42
-deltaT <- 7
+deltaT <- 1
 nstep <- Time/deltaT
 t0 <- 0
 STD <- 0.5
