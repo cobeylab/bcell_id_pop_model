@@ -87,7 +87,7 @@ if (STAN) {
                     warmup = 1000,
                     refresh = 10,
                     control = list(adapt_delta = 0.99,
-                                   max_treedepth = 10)
+                                   max_treedepth = 20)
   )
   
   print(estimates)

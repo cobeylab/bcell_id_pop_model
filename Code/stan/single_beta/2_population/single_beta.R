@@ -3,7 +3,7 @@ library('deSolve')
 library("ggplot2") #good data vis.
 library("reshape2") #data.frame reshaping
 
-setwd("~/Desktop/CobeyLab/bcell_id_pop_model/Code/stan/single_beta")
+setwd("~/Desktop/CobeyLab/bcell_id_pop_model/Code/stan/single_beta/2_population")
 
 DUMMY_DATA <- 1
 NOISE <- 1
@@ -28,7 +28,7 @@ if (DUMMY_DATA) {
   Bs <- c(1590,1412)
   t_peak <- 7 
   TIME <- 28
-  deltaT <- 1
+  deltaT <- 7
   t0 <- 0
   nstep <- TIME/deltaT
   time <- seq(deltaT,TIME,deltaT)
@@ -83,7 +83,7 @@ if (STAN) {
                     warmup = 1000,
                     refresh = 10,
                     control = list(adapt_delta = 0.8,
-                                   max_treedepth = 6)
+                                   max_treedepth = 10)
   )
   
   print(estimates)

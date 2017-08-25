@@ -1,13 +1,13 @@
-// saved as state_var_K.stan
+// saved as tau_fit.stan
 
 functions {
   real[] model1(real t, real[] B, real[] theta, real[] x_r, int[] x_i){
     real dXdt[2];
     if (t < x_r[4]){
-      dXdt[1] = (((x_r[6])/x_r[2])*B[1])*(1 - (B[1]/(B[2])));
+      dXdt[1] = (((theta[1])/x_r[2])*B[1])*(1 - (B[1]/(B[2])));
       dXdt[2] = 0;
     } else {
-      dXdt[1] = (((x_r[6])/x_r[2])*B[1])*(1 - (B[1]/(B[2])));
+      dXdt[1] = (((theta[1])/x_r[2])*B[1])*(1 - (B[1]/(B[2])));
       dXdt[2] = x_r[5]*(t-x_r[4]);
     }
     return dXdt;
@@ -25,39 +25,37 @@ data {
   real<lower=0> bi; //bcells bound at Ags
   real<lower=0> tw; //time at which K begins decreasing
   real omega; //K waning parameter
-  real<lower=0> tau;
+  real<lower=0> rho;
 }
 
 transformed data {
-  real x_r[6];
+  real x_r[5];
   int x_i[0];
   x_r[1] = Ags;
   x_r[2] = AC50;
   x_r[3] = bi;
   x_r[4] = tw;
   x_r[5] = omega;
-  x_r[6] = tau;
 }
 
 parameters {
-  real m;
-  real<lower=0> sigma[2];
+  real theta[1];
+  real<lower=0> sigma[1];
 }
 
 transformed parameters {
-  real theta[1]; // M, tau
-  theta[1] = 8000 + 3000*m;
+
 }
 
 model {
   real z_hat[n,2];
   real B[2];
   B[1] = B0;
-  B[2] = theta[1]*bi;
+  B[2] = rho*bi;
   sigma[1] ~ student_t(3,0,1);
-  sigma[2] ~ student_t(3,0,1);
-  m ~ normal(0,1);
-  // tau ~ normal(1,1);
+  // sigma[2] ~ student_t(3,0,1);
+  //m ~ normal(0,1);
+  theta[1] ~ normal(1,1);
   z_hat = integrate_ode_rk45(model1, B, t0, ts, theta, x_r, x_i);
   for (i in 1:n){
     z[i,1] ~ normal(z_hat[i,1],sigma[1]*500);

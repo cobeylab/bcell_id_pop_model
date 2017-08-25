@@ -3,7 +3,7 @@ library('deSolve')
 library("ggplot2") #good data vis.
 library("reshape2") #data.frame reshaping
 
-setwd("~/Desktop/CobeyLab/bcell_id_pop_model/Code/stan/state_var_K")
+setwd("~/Desktop/CobeyLab/bcell_id_pop_model/Code/stan/tau_fit")
 
 DUMMY_DATA <- 1
 NOISE <- 0
@@ -23,11 +23,11 @@ if (DUMMY_DATA){
   Ags <- 66 #nM
   AC50 <- 2
   b_i <- 1/AC50
-  M <- 7000
+  M <- 8000
   Tp <- 0.9
   t_peak <- 7#days
   omega <- -3
-  tau <- 0.9
+  tau <- 0.7
   
   Time <- 28
   deltaT <- 7
@@ -81,7 +81,7 @@ if (PLOT) {
 dummy_data <- dummy[,-1]
 
 if (STAN) {
-  estimates <- stan(file = 'state_var_K.stan',
+  estimates <- stan(file = 'tau_fit.stan',
                     data = list (
                       n  = nstep,
                       B0 = state_vals[1],
@@ -93,7 +93,7 @@ if (STAN) {
                       bi = b_i,
                       tw = t_peak,
                       omega = omega,
-                      tau = tau
+                      rho = M
                     ),
                     chains = 4,
                     iter = 2000,
