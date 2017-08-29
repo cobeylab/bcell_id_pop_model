@@ -7,8 +7,8 @@ setwd("~/Desktop/CobeyLab/bcell_id_pop_model/Code/stan/single_beta/2_population"
 
 DUMMY_DATA <- 1
 NOISE <- 1
-PLOT <- 0
-STAN <- 1
+PLOT <- 1
+STAN <- 0
 FIT_PLOT <- 0
 STD <- 1
 

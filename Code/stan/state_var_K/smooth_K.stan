@@ -54,7 +54,7 @@ model {
   z_hat = integrate_ode_rk45(model1, B, t0, ts, theta, x_r, x_i);
   for (i in 1:n){
     z[i,1] ~ normal(z_hat[i,1],sigma[1]);
-    z[i,2] ~ normal(z_hat[i,2],sigma[2]);
+    // z[i,2] ~ normal(z_hat[i,2],sigma[2]);
   }
 
 }
