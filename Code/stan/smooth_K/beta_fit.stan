@@ -49,7 +49,7 @@ model {
   sigma[1] ~ student_t(3,0,1);
   sigma[2] ~ student_t(3,0,1);
   theta[1] ~ normal(0,1);
-  z_hat = integrate_ode_rk45(single_beta, B, t0, ts, theta, x_r, x_i);
+  z_hat = integrate_ode_bdf(single_beta, B, t0, ts, theta, x_r, x_i);
   for (i in 1:n){
     z[i,1] ~ normal(z_hat[i,1],sigma[1]*500);
     z[i,2] ~ normal(z_hat[i,2],sigma[2]*500);

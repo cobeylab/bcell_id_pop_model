@@ -10,7 +10,7 @@ NOISE <- 1
 PLOT <- 0
 STAN <- 1
 FIT_PLOT <- 0
-STD <- 10
+STD <- 1
 
 cbbPalette <- c("#000000", "#E69F00", "#56B4E9",
                 "#009E73", "#F0E442", "#0072B2",
@@ -23,7 +23,7 @@ if (DUMMY_DATA) {
   taus <- c(.7,.7)
   c_50s <- c(2,1.8)
   rho <- 7000
-  beta <- 0.1
+  beta <- 0.25
   omega <- -3
   Bs <- c(1590,1412)
   t_peak <- 7 
@@ -59,6 +59,8 @@ if (PLOT) {
 }
 
 data <- out[,-1]
+single <- list('theta'=array(0.5,dim=1))
+inits <- list(single,single,single,single)
 
 if (STAN) {
   estimates <- stan(file = 'beta_fit.stan',
@@ -76,7 +78,9 @@ if (STAN) {
                     chains = 4,
                     iter = 2000,
                     warmup = 1000,
-                    refresh = 100,
+                    refresh = 10,
+                    init = inits,
+                    sample_file = 'smooth_K_beta_fit.csv',
                     control = list(adapt_delta = 0.8,
                                    max_treedepth = 10)
   )
