@@ -6,7 +6,7 @@ library("reshape2") #data.frame reshaping
 setwd("~/Desktop/CobeyLab/bcell_id_pop_model/Code/stan/smooth_K")
 
 DUMMY_DATA <- 1
-NOISE <- 1
+NOISE <- 0
 PLOT <- 0
 STAN <- 1
 FIT_PLOT <- 0
@@ -23,7 +23,7 @@ if (DUMMY_DATA) {
   taus <- c(.7,.7)
   c_50s <- c(2,1.8)
   rho <- 7000
-  beta <- 0.25
+  beta <- 0.7
   omega <- -3
   Bs <- c(1590,1412)
   t_peak <- 7 
@@ -78,10 +78,10 @@ if (STAN) {
                     chains = 4,
                     iter = 2000,
                     warmup = 1000,
-                    refresh = 10,
+                    refresh = 100,
                     init = inits,
                     sample_file = 'smooth_K_beta_fit.csv',
-                    control = list(adapt_delta = 0.8,
+                    control = list(adapt_delta = 0.99,
                                    max_treedepth = 10)
   )
   
