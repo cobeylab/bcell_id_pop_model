@@ -23,7 +23,7 @@ if (DUMMY_DATA) {
   taus <- c(.7,.7)
   c_50s <- c(2,1.8)
   rho <- 7000
-  beta <- 0.7
+  beta <- 0.1
   omega <- -3
   Bs <- c(1590,1412)
   t_peak <- 7 
